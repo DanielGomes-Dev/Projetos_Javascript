@@ -1,0 +1,23 @@
+{
+  "name": "micro-videos",
+  "version": "1.0.0",
+  "description": "admin do catalago de videos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node",
+    "tsc": "tsc",
+    "tsc:clean": "rm tsconfig.tsbuildinfo && rm -r dist"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}

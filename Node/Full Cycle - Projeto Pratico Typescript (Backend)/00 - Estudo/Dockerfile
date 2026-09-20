@@ -1,4 +1,4 @@
-FROM node:14.15.4-slim
+FROM node:26-slim
 
 # Usuario do container - root
 
@@ -10,4 +10,5 @@ WORKDIR /home/node/app
 USER node
 # Pesquisar sobre users no docker
 
-CMD ["tail", "-f", "/dev/null"]
+CMD ["sh", "-c", "npm install && tail -f /dev/null"]
+ 
