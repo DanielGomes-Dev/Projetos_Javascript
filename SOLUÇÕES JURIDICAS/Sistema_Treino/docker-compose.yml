@@ -1,0 +1,83 @@
+services:
+  api:
+    build:
+      context: .
+      target: dev
+    container_name: jurisengine_api
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      PORT: 3000
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASS: ${DB_PASS:-postgres}
+      DB_NAME: ${DB_NAME:-juris_db}
+      # Corrige um bug real (Fase 8): sem isso, o container da API cai no
+      # fallback "localhost" de src/config/redis.ts, que dentro do Docker
+      # não é o Redis — é o próprio container da API. Resultado: a API
+      # nunca conseguia falar com o Redis (Bull Board e enfileiramento
+      # quebrados), mesmo com o serviço "redis" rodando normalmente ao
+      # lado. Ver a Fase 8 do guia para o histórico completo.
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    container_name: jurisengine_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASS:-postgres}
+      POSTGRES_DB: ${DB_NAME:-juris_db}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - juris_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-juris_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: jurisengine_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  worker:
+    build:
+      context: .
+      target: dev   # ver nota da Fase 6 sobre por que isto precisou ser corrigido
+    container_name: jurisengine_worker
+    command: npm run worker
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=redis
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  juris_db_data:
+  redis_data:

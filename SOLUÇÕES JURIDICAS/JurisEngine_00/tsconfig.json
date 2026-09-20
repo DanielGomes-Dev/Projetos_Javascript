@@ -1,0 +1,54 @@
+{
+  "compilerOptions": {
+    // Define a versão do JavaScript que será gerada na compilação. 
+    // "esnext" significa que ele vai gerar o código JS mais moderno possível.
+    "target": "esnext", 
+
+    // Define qual sistema de módulos será usado no código gerado.
+    // "NodeNext" é o padrão mais atual para Node.js, oferecendo suporte nativo perfeito para ES Modules (import/export).
+    "module": "NodeNext", 
+
+    // Diz ao TypeScript como ele deve procurar/resolver os arquivos quando você faz um "import".
+    // "NodeNext" segue as regras modernas do Node (exigindo extensões nos imports em arquivos ESM).
+    "moduleResolution": "NodeNext", 
+
+    // Diz ao TypeScript quais recursos nativos do JS ele deve reconhecer como válidos.
+    // "ES2022" permite usar recursos como o método .at() em arrays e top-level await.
+    "lib": ["ES2022"], 
+
+    // A pasta onde o código JavaScript compilado será salvo.
+    "outDir": "./dist", 
+
+    // A pasta raiz onde seus arquivos TypeScript estão. 
+    // O TS usa isso para replicar a estrutura de pastas do "src" dentro do "dist".
+    "rootDir": "./src", 
+
+    // Desativa as checagens de tipos mais rigorosas (como não permitir 'any' implícito ou checagem estrita de null).
+    // (Geralmente recomenda-se 'true' para projetos novos, mas 'false' facilita a migração de JS para TS).
+    "strict": false,
+
+    // Permite importar módulos antigos (CommonJS) usando a sintaxe moderna (ES6).
+    // Ex: permite fazer `import express from 'express'` no lugar de `import * as express`.
+    "esModuleInterop": true, 
+
+    // Ignora a checagem de tipos dos arquivos de bibliotecas (node_modules/**/*.d.ts).
+    // Isso deixa a compilação MUITO mais rápida e evita erros de bibliotecas de terceiros.
+    "skipLibCheck": true,
+
+    // Impede que você importe 'MeuArquivo.ts' se o nome no disco for 'meuarquivo.ts'.
+    // Previne um bug clássico onde o código funciona no Windows/Mac (que ignoram maiúsculas), mas quebra no Linux/Servidor (que não ignoram).
+    "forceConsistentCasingInFileNames": true,
+
+    // [TS 5.4+] Permite que você escreva imports com a extensão '.ts' (ex: import X from './arquivo.ts').
+    // Na hora de compilar, o TS reescreve magicamente esse import para './arquivo.js' na pasta 'dist'.
+    "rewriteRelativeImportExtensions": true, 
+
+    // [TS 5.5+] Força você a usar o TypeScript APENAS para tipos (Type-Stripping).
+    // Ele proíbe recursos do TS que geram código real (como 'enums' ou 'namespaces'). 
+    // Isso garante que você pode usar ferramentas super rápidas como esbuild, SWC ou o Node.js nativo para rodar o código simplesmente "apagando" os tipos.
+    "erasableSyntaxOnly": true 
+  },
+  
+  // Diz ao compilador quais arquivos ele deve processar (todos dentro da pasta src e suas subpastas).
+  "include": ["src/**/*"]
+}

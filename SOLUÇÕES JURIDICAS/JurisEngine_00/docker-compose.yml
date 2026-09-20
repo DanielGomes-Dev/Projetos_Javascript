@@ -1,0 +1,143 @@
+# Inicia a declaração de todos os containers (serviços) que farão parte desta aplicação.
+services: 
+  
+  # Nome do serviço. É assim que outros containers na mesma rede poderão 
+  # se comunicar com esta API (ex: http://api:3000).
+  api: 
+    
+    # Bloco de configurações sobre como construir (buildar) a imagem do Docker.
+    build: 
+      # Define o "contexto" do build, ou seja, onde o Docker deve procurar os arquivos.
+      # O "." (ponto) significa a pasta atual (onde este arquivo docker-compose.yml está).
+      context: . 
+      
+      # Lembra do "Multi-stage Build" no seu Dockerfile? 
+      # Isso diz ao Docker para parar a construção na etapa "dev" (FROM base AS dev).
+      # Ele ignora qualquer etapa de produção que venha depois disso no Dockerfile.
+      target: dev 
+    
+    # Dá um nome fixo e amigável ao container (neste caso, "jurisengine_api").
+    # Se você não colocar isso, o Docker inventa um nome juntando o nome da pasta + serviço (ex: meuprojeto-api-1).
+    container_name: jurisengine_api 
+    
+    # Mapeamento de portas (Redirecionamento).
+    ports: 
+      # Sintaxe: "PORTA_DA_SUA_MÁQUINA:PORTA_DO_CONTAINER"
+      # Tudo que bater no "localhost:3000" do seu computador será enviado para a porta 3000 dentro do container.
+      - "${PORT}:${PORT}" 
+    
+    # Volumes criam um "espelho" (Bind Mount) entre pastas/arquivos da sua máquina física e o container.
+    # É isso que permite o "Live Reload" (Hot Reload) funcionar sem precisar reconstruir o container a cada mudança.
+    volumes: 
+      # Espelha a pasta "src" local para dentro de "/app/src" no container.
+      # Se você salvar um arquivo no VSCode, o container enxerga a mudança instantaneamente.
+      - ./src:/app/src 
+      
+      # Espelha o package.json. Útil se você adicionar um script novo, o container já reconhece.
+      - ./package.json:/app/package.json 
+      
+      # Espelha as configurações do TypeScript.
+      - ./tsconfig.json:/app/tsconfig.json 
+      
+      # Nota: Repare que a pasta "node_modules" não está mapeada aqui. 
+      # Isso é excelente, pois garante que o container use a "node_modules" instalada 
+      # no Linux Alpine (dentro do Dockerfile) e não a da sua máquina física, evitando conflitos de sistema operacional.
+    
+    # Política de reinício do container em caso de falha ou quando o computador reiniciar.
+    # "unless-stopped" significa: "Mantenha o container rodando e reinicie se ele crachar, 
+    # a não ser que eu digite 'docker stop' explicitamente".
+    restart: unless-stopped
+    # Define as variáveis de ambiente que estarão acessíveis dentro do container (via process.env).
+    environment:
+      # Passa a variável de ambiente "PORT" para o container.
+      # A sintaxe ${PORT} instrui o Docker Compose a ler o valor de uma variável "PORT" 
+      # declarada no seu arquivo ".env" local (ou no próprio terminal/sistema) e injetá-la no container.
+      - PORT=${PORT}
+      - MONGODB_URI=${MONGODB_URI}
+
+  # Define o serviço do banco de dados (acessível por outros containers na rede como "mongo")
+  mongo: 
+    
+    # Em vez de construir a partir de um Dockerfile (build), aqui baixamos uma imagem 
+    # pré-pronta direto do Docker Hub. Estamos usando a versão 7 oficial do MongoDB.
+    image: mongo:7 
+    command: --quiet # O --quiet diz para o MongoDB reduzir drasticamente o nível de verbosidade dos logs. 
+    # Nome fixo e amigável para o container.
+    container_name: jurisengine_mongo 
+    
+    # Mapeamento de portas (MÁQUINA:CONTAINER).
+    # 27017 é a porta padrão do MongoDB. Isso permite que você conecte ferramentas
+    # gráficas (como MongoDB Compass) instaladas no seu computador direto no banco local.
+    ports: 
+      - "27017:27017" 
+      
+    # Mapeamento de volumes para PERSISTÊNCIA DE DADOS.
+    volumes: 
+      # Ao contrário do mapeamento de pastas locais (bind mount) usado na API,
+      # aqui usamos um "Named Volume" (volume nomeado) chamado 'mongo_data'.
+      # Ele é mapeado para '/data/db', que é a pasta onde o Mongo salva os dados internamente.
+      # Se você não fizer isso, todo o seu banco de dados sumirá quando o container for deletado!
+      - mongo_data:/data/db 
+      
+    # O Healthcheck testa ativamente se o container está apenas "ligado" ou se 
+    # o banco de dados está realmente pronto para receber conexões.
+    # healthcheck: 
+      # O comando de teste: executa o Mongo Shell interno ('mongosh') e dá um 'ping' silencioso no banco.
+      # Se retornar 'ok', o Docker marca o status do container como "healthy" (saudável).
+      # test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      
+      # Frequência com que o Docker vai executar o teste (a cada 5 segundos).
+      # interval: 50s 
+      
+      # Tempo limite esperando a resposta do ping (se demorar mais de 5s, conta como falha).
+      # timeout: 5s 
+      
+      # Número de falhas consecutivas permitidas antes do Docker considerar o container como "unhealthy" (doente).
+      # retries: 5 
+      
+    # Mantém o banco de dados rodando e o reinicia automaticamente se o Docker/computador reiniciar.
+    restart: unless-stopped 
+
+
+  redis:
+    image: redis:7-alpine
+    container_name: jurisengine_redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+
+
+  worker:
+    build:
+      context: .
+      target: dev
+    container_name: jurisengine_worker
+    command: npm run worker
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+    env_file:
+      - .env
+    environment:
+      - REDIS_HOST=${REDIS_HOST}
+      - LAWSUIT_SYNC_CONCURRENCY=${LAWSUIT_SYNC_CONCURRENCY}
+      - LAWSUIT_SYNC_CONCURRENCY=${LAWSUIT_SYNC_CONCURRENCY}
+      - MONGODB_URI=${MONGODB_URI}
+
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+
+# ---------- Declaração Global de Volumes ----------
+
+# Para que o Docker saiba que 'mongo_data' (usado lá em cima) não é uma pasta do seu projeto, 
+# mas sim um Volume Gerenciado pelo Docker, precisamos declará--lo aqui na raiz do arquivo.
+volumes:
+  # O Docker vai criar um espaço isolado no HD da sua máquina (geralmente em /var/lib/docker/volumes)
+  # para guardar os dados do Mongo de forma extremamente rápida e segura.
+  mongo_data:
+  redis_data:

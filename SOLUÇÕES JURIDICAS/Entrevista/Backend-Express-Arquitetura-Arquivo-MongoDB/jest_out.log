@@ -1,0 +1,273 @@
+FAIL tests/enrollments.test.js (21.141 s)
+  ● Console
+
+    console.warn
+      Starting the MongoMemoryServer Instance failed, enable debug log for more information. Error:
+       DownloadError: Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+      Status Code is 403 (MongoDB's 404)
+      This means that the requested version-platform combination doesn't exist
+      Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+      List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+          at RedirectableRequest.<anonymous> (/sessions/rcw-01j5htms9v5bk1uxz6ledhsv/mnt/Backend-Express-Arquitetura-Arquivo-MongoDB/node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+          at RedirectableRequest.emit (node:events:519:28)
+          at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (/sessions/rcw-01j5htms9v5bk1uxz6ledhsv/mnt/Backend-Express-Arquitetura-Arquivo-MongoDB/node_modules/follow-redirects/index.js:424:10)
+          at ClientRequest.RedirectableRequest._onNativeResponse (/sessions/rcw-01j5htms9v5bk1uxz6ledhsv/mnt/Backend-Express-Arquitetura-Arquivo-MongoDB/node_modules/follow-redirects/index.js:109:12)
+          at Object.onceWrapper (node:events:634:26)
+          at ClientRequest.emit (node:events:519:28)
+          at HTTPParser.parserOnIncomingClient (node:_http_client:780:27)
+          at HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)
+          at Socket.socketOnData (node:_http_client:615:22)
+          at Socket.emit (node:events:519:28)
+          at Socket.Readable.read (node:internal/streams/readable:782:10)
+          at Socket.read (node:net:786:39)
+          at flow (node:internal/streams/readable:1283:53)
+          at resume_ (node:internal/streams/readable:1262:3)
+          at processTicksAndRejections (node:internal/process/task_queues:89:21) {
+        url: 'https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz',
+        msg: "Status Code is 403 (MongoDB's 404)\n" +
+          "This means that the requested version-platform combination doesn't exist\n" +
+          "Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'\n" +
+          'List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive'
+      }
+
+       9 |
+      10 | async function connectTestDatabase() {
+    > 11 |   mongoServer = await MongoMemoryServer.create({
+         |                 ^
+      12 |     binary: {
+      13 |       version: process.env.MONGOMS_VERSION || '7.0.14'
+      14 |     }
+
+      at node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:307:17
+      at MongoMemoryServer.start (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:298:5)
+      at Function.create (node_modules/mongodb-memory-server-core/src/MongoMemoryServer.ts:265:5)
+      at Object.connectTestDatabase (tests/helpers/mongo.js:11:17)
+
+  ● POST /enrollments › confirma a matrícula quando há vaga disponível
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › coloca em fila de espera quando o curso está lotado
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › rejeita matrícula por idade insuficiente com 422
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › rejeita matrícula em curso encerrado com 422
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › retorna 400 para ObjectId malformado
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › retorna 404 quando aluno ou curso não existem
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › impede matrícula ativa duplicada com 409
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › permite nova matrícula após cancelamento
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › calcula percentual de bolsa e mensalidade final conforme a renda
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● POST /enrollments › não permite que vagasOcupadas ultrapasse a capacidade sob concorrência
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › cancela uma matrícula em fila de espera sem alterar vagasOcupadas nem promover
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › promove o primeiro da fila ao cancelar uma matrícula confirmada
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › decrementa vagasOcupadas ao cancelar matrícula confirmada sem fila
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › cancelamento repetido é idempotente e não produz novos efeitos
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › retorna 404 para matrícula inexistente
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● PATCH /enrollments/:id/cancel › retorna 400 para id malformado
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● GET /enrollments › filtra matrículas por cursoId e por status
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● GET /enrollments › retorna 400 para status inválido
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+
+  ● GET /enrollments › retorna 400 para cursoId malformado
+
+    Download failed for url "https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2204-7.0.14.tgz", Details:
+    Status Code is 403 (MongoDB's 404)
+    This means that the requested version-platform combination doesn't exist
+    Try to use different version 'new MongoMemoryServer({ binary: { version: 'X.Y.Z' } })'
+    List of available versions can be found here: https://www.mongodb.com/download-center/community/releases/archive
+
+      at RedirectableRequest.<anonymous> (node_modules/mongodb-memory-server-core/src/util/MongoBinaryDownload.ts:383:17)
+      at RedirectableRequest.Object.<anonymous>.RedirectableRequest._processResponse (node_modules/follow-redirects/index.js:424:10)
+      at ClientRequest.RedirectableRequest._onNativeResponse (node_modules/follow-redirects/index.js:109:12)
+

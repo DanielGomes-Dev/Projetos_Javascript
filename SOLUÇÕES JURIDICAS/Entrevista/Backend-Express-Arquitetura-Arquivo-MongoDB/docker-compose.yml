@@ -1,0 +1,36 @@
+services:
+  mongodb:
+    image: mongo:7.0.14
+    restart: unless-stopped
+    ports:
+      - "27028:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=desafio_senior
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+  redis:
+    image: redis:7.2-alpine
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 5s
+
+volumes:
+  mongo_data:
+    driver: local
+  redis_data:
+    driver: local

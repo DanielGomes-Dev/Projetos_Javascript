@@ -1,0 +1,16 @@
+# Normaliza terminações de linha no repositório: todo arquivo de texto
+# é guardado no Git com LF, independente do sistema operacional de quem
+# commitou (Windows normalmente grava CRLF por padrão). Sem isso, editar
+# o mesmo arquivo em Windows e depois em Linux/macOS (ou vice-versa)
+# gera diffs enormes de "todas as linhas mudaram", mesmo quando o
+# conteúdo real não mudou nada — foi exatamente o que aconteceu neste
+# projeto antes da Fase 8 (ver o guia).
+* text=auto eol=lf
+
+# Arquivos binários: nunca tentar normalizar terminação de linha neles.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary

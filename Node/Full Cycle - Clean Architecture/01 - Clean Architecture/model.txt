@@ -1,0 +1,14 @@
+- ParkingLot
+    - code
+    - capacity
+    - openHour
+    - closeHour
+
+- ParkedCard
+    - code
+    - plate
+    - date
+
+useCases
+    - EnterParkingLot
+    - LeaveParkingLot
