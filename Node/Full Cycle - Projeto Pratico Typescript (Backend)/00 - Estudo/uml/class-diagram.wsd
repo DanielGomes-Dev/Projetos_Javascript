@@ -1,0 +1,21 @@
+
+@startuml
+
+' Modelo da Entidade, Representando o que vai acontecer com a categoria
+
+entity Category
+
+Category : uuid id
+Category : string name
+Category : string description
+Category : bool is_active
+Category : date created_at
+
+Category : create()
+Category : update()
+Category : activate()
+Category : deactivate()
+Category : delete()
+
+@enduml
+
