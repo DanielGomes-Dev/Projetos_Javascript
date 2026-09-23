@@ -15,8 +15,9 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "esnext",
-    "types": [],
+    "types": ["jest", "node"],
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -29,7 +30,8 @@
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    // "exactOptionalPropertyTypes": true,
+    "strictNullChecks": false,
 
     // Style Options
     // "noImplicitReturns": true,
@@ -40,13 +42,15 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
+    "strict": true ,
+    // "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+
+    "rewriteRelativeImportExtensions": true, // permite que você escreva import './foo.ts' durante o desenvolvimento (mais natural) e o compilador reescreve para .js automaticamente na hora de gerar o dist/
   },
   "include": ["src/"]
 }

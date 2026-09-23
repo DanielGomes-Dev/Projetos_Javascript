@@ -1,5 +1,5 @@
 {
-  "name": "micro-videos",
+  "name": "micro-videos-admin-catalago",
   "version": "1.0.0",
   "description": "admin do catalago de videos",
   "main": "index.js",
@@ -17,9 +17,15 @@
     "@swc/core": "^1.16.2",
     "@swc/jest": "^0.2.39",
     "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.25",
     "@types/node": "^26.6.2",
+    "@types/uuid": "^10.0.0",
     "jest": "^30.5.2",
     "ts-node": "^10.9.2",
     "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "lodash": "^4.18.1",
+    "uuid": "^14.0.2"
   }
 }

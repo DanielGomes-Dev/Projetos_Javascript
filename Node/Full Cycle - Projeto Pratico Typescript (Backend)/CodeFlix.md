@@ -10,8 +10,6 @@
 
 
 
-
-
 ## Projeto code Flix
 
 - Catalago de Video
