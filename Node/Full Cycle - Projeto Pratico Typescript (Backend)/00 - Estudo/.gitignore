@@ -1,5 +1,0 @@
-dist
-.history/
-node_modules/
-tsconfig.tsbuildinfo
-coverage/
